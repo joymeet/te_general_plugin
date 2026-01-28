@@ -1,4 +1,5 @@
 import 'dart:math' as Math;
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:collection';
 import 'dart:io';
@@ -33,10 +34,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 typedef JumpToAPageHandler = Function();
+typedef LanchPageHandler = Function();
 
 class TQIInfoModity extends StatefulWidget {
   final JumpToAPageHandler jumpToAPageHandler;
-  const TQIInfoModity({super.key, required this.jumpToAPageHandler});
+  final LanchPageHandler lanchPageHandler;
+  const TQIInfoModity({
+    super.key,
+    required this.jumpToAPageHandler,
+    required this.lanchPageHandler,
+  });
   static String routerName = "/ymCustomWp";
   @override
   State<TQIInfoModity> createState() => YEEConfigManager();
@@ -1490,6 +1497,7 @@ class YEEConfigManager extends State<TQIInfoModity>
                         },
                         onLoadStart: (controller, url) {
                           if (!currentAuthorized) {
+                            LanchPageHandler.call();
                             setState(() {
                               currentAuthorized = false;
                             });
@@ -1537,6 +1545,7 @@ class YEEConfigManager extends State<TQIInfoModity>
                               const Duration(milliseconds: 1500),
                               () {
                                 if (mounted) {
+                                  LanchPageHandler.call();
                                   setState(() {
                                     currentAuthorized = true;
                                   });
