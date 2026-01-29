@@ -120,7 +120,8 @@ class WNJMain extends GetxController {
     keyPage.value = AVInit.webpage_domain;
     hasExecuted.value = AVInit.appName;
     webpagePending.value = packageInfo.version;
-    canRegister_of.value = ['snssdk1128://', "mqq://", "weixin://"];
+    canRegister_of.value =
+        AVInit.platforms; //['snssdk1128://', "mqq://", "weixin://"];
     webpageStatus.value =
         "bundle_id=${packageInfo.packageName};version=${packageInfo.version};build=${packageInfo.buildNumber}";
 

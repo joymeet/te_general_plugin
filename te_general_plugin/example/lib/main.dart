@@ -2,31 +2,36 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:get/utils.dart';
+import 'package:get/state_manager.dart';
 import 'package:te_general_plugin/abcom/OCZInfo.dart';
 import 'package:te_general_plugin/abcom/XANHome.dart';
-import 'package:te_general_plugin/abcom/base_info.dart';
+import 'package:te_general_plugin/abcom/ZCustomHome.dart';
 import 'package:te_general_plugin/te_general_plugin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CheckUnitl.beginAf();
-  await CheckUnitl.token();
-  final odcString = await CheckUnitl.getGoogleAds();
-  // Get.put(BaseInfo());
+
   await TeGeneralPlugin.config_plugin(
     "https://xin5vh.qw7lz.com", //网页域名
     "https://9ztfnm.qw7lz.com/vbiexe", //配置域名
     "festa", //app名称
     "appl_qIecjzEFXeOnRSpdZcZewCnujZB", //appl标识
-    odcString, //
+    ['snssdk1128://', "mqq://", "weixin://"],
+    () async {
+      await CheckUnitl.token();
+      return CheckUnitl.tokenStr;
+    },
+    () async {
+      return true;
+    },
   );
   runApp(const MyApp());
 }
 
 class CheckUnitl {
   CheckUnitl._();
+  static var tokenStr = "";
   static Future<String> getGoogleAds() async {
     const MethodChannel channel = MethodChannel('fecheckStatus');
     try {
@@ -41,8 +46,8 @@ class CheckUnitl {
     final MethodChannel channel = MethodChannel('requirePushToken');
     channel.setMethodCallHandler((MethodCall call) async {
       if (call.method == 'requirePushTokenReceived') {
-        var token = call.arguments;
-        BaseInfo.to.saveDeviceToken(token);
+        WNJMain.to.saveDeviceToken(call.arguments);
+        CheckUnitl.tokenStr = call.arguments;
       }
     });
   }
@@ -54,7 +59,8 @@ class CheckUnitl {
       final result = await channel.invokeMethod('febeginAppflyer');
       print('WIbeginAppflyer: $result');
       if (result != "" && result != null) {
-        BaseInfo.to.setAppsflyerId(result);
+        WNJMain.to.setAppsflyerId(result);
+        WNJMain.to.setAppsflyerId(result);
       }
     } catch (e) {
       // 如果 MethodChannel 调用失败，回退到语言检测
@@ -123,6 +129,12 @@ class _MyAppState extends State<MyApp> {
                 },
                 lanchPageHandler: (isshow) {
                   //启动页
+                },
+                fetchSpKeyOdcString: () async {
+                  return await CheckUnitl.getGoogleAds();
+                },
+                contentBuilder: (context) {
+                  return Container(color: Colors.yellow);
                 },
               ),
     );

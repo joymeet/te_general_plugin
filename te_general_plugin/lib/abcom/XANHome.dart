@@ -10,11 +10,12 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:te_general_plugin/abcom/ZCustomHome.dart';
 import 'package:te_general_plugin/abcom/ZYRegister.dart';
-import 'package:te_general_plugin/abcom/base_info.dart';
 
 typedef JumpToABPageHandler = Function(bool isFromYmCustomWp);
 
 class lanuchP extends StatefulWidget {
+  // final Widget Function(BuildContext)? contentBuilder;
+  // final Future<String> Function()? fetchSpKey;
   final JumpToABPageHandler jumpToABPageHandler;
   const lanuchP({super.key, required this.jumpToABPageHandler});
   static String routerName = "/lanuchP";

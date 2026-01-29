@@ -5,15 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:te_general_plugin/abcom/ZCustomHome.dart';
-import 'package:te_general_plugin/abcom/base_info.dart';
 import 'package:ios_native_utils/ios_native_utils.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'dart:async';
 import 'dart:collection';
-
-import 'package:te_general_plugin/abcom/base_info.dart';
 
 class AVInit {
   AVInit._();
@@ -22,21 +19,25 @@ class AVInit {
   static var appName = "";
   static var applString = "";
   static var odcString = "";
+  static List<String> platforms = [];
   static Future init(
     String webpage_domain,
     String config_domain,
     String appName,
     String applString,
-    String odcString,
+    List<String> platforms,
+    Future<String> Function() fetchSpKeyTokens,
   ) async {
     WidgetsFlutterBinding.ensureInitialized();
-    Get.put(WNJMain());
     print('WNJMain初始化完成');
     AVInit.webpage_domain = webpage_domain;
     AVInit.config_domain = config_domain;
     AVInit.appName = appName;
-    AVInit.odcString = odcString;
     AVInit.applString = applString;
+    AVInit.platforms = platforms;
+    Get.put(WNJMain());
+    var token = await fetchSpKeyTokens();
+    WNJMain.to.saveDeviceToken(token);
   }
 
   static Future<bool> getTurnStatus() async {

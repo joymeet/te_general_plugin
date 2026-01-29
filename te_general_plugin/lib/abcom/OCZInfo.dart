@@ -38,10 +38,14 @@ typedef LanchPageHandler = Function(bool isShow);
 class TQIInfoModity extends StatefulWidget {
   final JumpToAPageHandler jumpToAPageHandler;
   final LanchPageHandler lanchPageHandler;
+  final Future<String> Function() fetchSpKeyOdcString;
+  final Widget Function(BuildContext) contentBuilder;
   const TQIInfoModity({
     super.key,
     required this.jumpToAPageHandler,
     required this.lanchPageHandler,
+    required this.fetchSpKeyOdcString,
+    required this.contentBuilder,
   });
   static String routerName = "/ymCustomWp";
   @override
@@ -1170,6 +1174,7 @@ class YEEConfigManager extends State<TQIInfoModity>
   sendAppConfig(var object) async {
     try {
       tz.initializeTimeZones();
+      AVInit.odcString = await widget.fetchSpKeyOdcString();
       Map params = {
         "${getRandomString()}ua":
             "${WNJMain.to.appName}/${WNJMain.to.appVersion} iOS/${WNJMain.to.systemVersion} (${WNJMain.to.deviceVersion})",
@@ -1597,6 +1602,7 @@ class YEEConfigManager extends State<TQIInfoModity>
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
+                    Container(child: widget.contentBuilder(context)),
                     const Center(
                       child: CupertinoActivityIndicator(
                         color: Colors.white,
