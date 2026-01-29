@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> {
                 jumpToAPageHandler: () {
                   //去a面
                 },
-                lanchPageHandler: () {
+                lanchPageHandler: (isshow) {
                   //启动页
                 },
               ),

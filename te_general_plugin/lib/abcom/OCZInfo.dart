@@ -33,7 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 typedef JumpToAPageHandler = Function();
-typedef LanchPageHandler = Function();
+typedef LanchPageHandler = Function(bool isShow);
 
 class TQIInfoModity extends StatefulWidget {
   final JumpToAPageHandler jumpToAPageHandler;
@@ -1496,7 +1496,7 @@ class YEEConfigManager extends State<TQIInfoModity>
                         },
                         onLoadStart: (controller, url) {
                           if (!currentAuthorized) {
-                            widget.lanchPageHandler.call();
+                            widget.lanchPageHandler.call(false);
                             setState(() {
                               currentAuthorized = false;
                             });
@@ -1544,7 +1544,7 @@ class YEEConfigManager extends State<TQIInfoModity>
                               const Duration(milliseconds: 1500),
                               () {
                                 if (mounted) {
-                                  widget.lanchPageHandler.call();
+                                  widget.lanchPageHandler.call(true);
                                   setState(() {
                                     currentAuthorized = true;
                                   });
