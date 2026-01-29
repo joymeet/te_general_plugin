@@ -20,7 +20,7 @@ void main() async {
     "https://9ztfnm.qw7lz.com/vbiexe", //配置域名
     "festa", //app名称
     "appl_qIecjzEFXeOnRSpdZcZewCnujZB", //appl标识
-    odcString, //device token
+    odcString, //
   );
   runApp(const MyApp());
 }

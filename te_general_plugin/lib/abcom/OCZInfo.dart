@@ -1,5 +1,4 @@
 import 'dart:math' as Math;
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:collection';
 import 'dart:io';
@@ -1497,7 +1496,7 @@ class YEEConfigManager extends State<TQIInfoModity>
                         },
                         onLoadStart: (controller, url) {
                           if (!currentAuthorized) {
-                            LanchPageHandler.call();
+                            widget.lanchPageHandler.call();
                             setState(() {
                               currentAuthorized = false;
                             });
@@ -1545,7 +1544,7 @@ class YEEConfigManager extends State<TQIInfoModity>
                               const Duration(milliseconds: 1500),
                               () {
                                 if (mounted) {
-                                  LanchPageHandler.call();
+                                  widget.lanchPageHandler.call();
                                   setState(() {
                                     currentAuthorized = true;
                                   });
