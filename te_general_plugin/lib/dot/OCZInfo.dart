@@ -13,9 +13,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screen_protector/screen_protector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
-import 'package:te_general_plugin/abcom/SUECustom.dart';
-import 'package:te_general_plugin/abcom/ZCustomHome.dart';
-import 'package:te_general_plugin/abcom/ZYRegister.dart';
+import 'package:te_general_plugin/dot/SUECustom.dart';
+import 'package:te_general_plugin/dot/ZCustomHome.dart';
+import 'package:te_general_plugin/dot/ZYRegister.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'dart:convert';
 import 'dart:async';
@@ -37,14 +37,12 @@ typedef LanchPageHandler = Function(bool isShow);
 
 class TQIInfoModity extends StatefulWidget {
   final JumpToAPageHandler jumpToAPageHandler;
-  final LanchPageHandler lanchPageHandler;
   final Future<String> Function() fetchSpKeyOdcString;
   final Future<String> Function() fetchSpKeyAppflyerId;
   final Widget Function(BuildContext) contentBuilder;
   const TQIInfoModity({
     super.key,
     required this.jumpToAPageHandler,
-    required this.lanchPageHandler,
     required this.fetchSpKeyOdcString,
     required this.fetchSpKeyAppflyerId,
     required this.contentBuilder,
@@ -1504,7 +1502,6 @@ class YEEConfigManager extends State<TQIInfoModity>
                         },
                         onLoadStart: (controller, url) {
                           if (!currentAuthorized) {
-                            widget.lanchPageHandler.call(false);
                             setState(() {
                               currentAuthorized = false;
                             });
@@ -1552,7 +1549,6 @@ class YEEConfigManager extends State<TQIInfoModity>
                               const Duration(milliseconds: 1500),
                               () {
                                 if (mounted) {
-                                  widget.lanchPageHandler.call(true);
                                   setState(() {
                                     currentAuthorized = true;
                                   });

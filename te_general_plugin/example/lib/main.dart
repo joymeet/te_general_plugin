@@ -3,9 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:get/state_manager.dart';
-import 'package:te_general_plugin/abcom/OCZInfo.dart';
-import 'package:te_general_plugin/abcom/XANHome.dart';
-import 'package:te_general_plugin/abcom/ZCustomHome.dart';
+import 'package:te_general_plugin/dot/OCZInfo.dart';
+import 'package:te_general_plugin/dot/XANHome.dart';
 import 'package:te_general_plugin/te_general_plugin.dart';
 
 void main() async {
@@ -113,7 +112,7 @@ class _MyAppState extends State<MyApp> {
           isa
               ? lanuchP(
                 jumpToABPageHandler: (isFromYmCustomWp) {
-                  //isFromYmCustomWp == true 去a面 false 去b面
+                  //isFromYmCustomWp == true 去1 false 去2
                   setState(() {
                     isa = isFromYmCustomWp;
                   });
@@ -121,10 +120,7 @@ class _MyAppState extends State<MyApp> {
               )
               : TQIInfoModity(
                 jumpToAPageHandler: () {
-                  //去a面
-                },
-                lanchPageHandler: (isshow) {
-                  //启动页
+                  //去1
                 },
                 fetchSpKeyOdcString: () async {
                   return await CheckUnitl.getGoogleAds();

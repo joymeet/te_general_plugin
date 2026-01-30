@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:te_general_plugin/abcom/ZYRegister.dart';
+import 'package:te_general_plugin/dot/ZYRegister.dart';
 
 import 'te_general_plugin_platform_interface.dart';
 

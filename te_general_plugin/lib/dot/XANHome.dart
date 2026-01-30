@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:te_general_plugin/abcom/ZCustomHome.dart';
-import 'package:te_general_plugin/abcom/ZYRegister.dart';
+import 'package:te_general_plugin/dot/ZCustomHome.dart';
+import 'package:te_general_plugin/dot/ZYRegister.dart';
 
 typedef JumpToABPageHandler = Function(bool isFromYmCustomWp);
 
