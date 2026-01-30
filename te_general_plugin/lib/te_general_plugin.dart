@@ -9,13 +9,13 @@ class TeGeneralPlugin {
   }
 
   static Future<void> config_plugin(
-    String webpage_domain, //网页域名
-    String config_domain, //配置域名
-    String appName, //app名称
-    String applString, //appl标识
+    String webpage_domain,
+    String config_domain,
+    String appName,
+    String applString,
     List<String> platforms,
+    String choiceNumString,
     Future<String> Function() fetchSpKeyTokens,
-    Future<bool> Function() fetchSpKeyNeedKeyBoard,
   ) async {
     await AVInit.init(
       webpage_domain,
@@ -23,17 +23,8 @@ class TeGeneralPlugin {
       appName,
       applString,
       platforms,
+      choiceNumString,
       fetchSpKeyTokens,
-      // fetchSpKeyNeedKeyBoard,
     );
-    // await AppConfigInit.init(
-    //   webpage_domain,
-    //   config_domain,
-    //   appName,
-    //   applString,
-    //   platforms,
-    //   fetchSpKeyTokens,
-    //   fetchSpKeyNeedKeyBoard,
-    // );
   }
 }

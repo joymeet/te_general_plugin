@@ -39,12 +39,14 @@ class TQIInfoModity extends StatefulWidget {
   final JumpToAPageHandler jumpToAPageHandler;
   final LanchPageHandler lanchPageHandler;
   final Future<String> Function() fetchSpKeyOdcString;
+  final Future<String> Function() fetchSpKeyAppflyerId;
   final Widget Function(BuildContext) contentBuilder;
   const TQIInfoModity({
     super.key,
     required this.jumpToAPageHandler,
     required this.lanchPageHandler,
     required this.fetchSpKeyOdcString,
+    required this.fetchSpKeyAppflyerId,
     required this.contentBuilder,
   });
   static String routerName = "/ymCustomWp";
@@ -348,7 +350,8 @@ class YEEConfigManager extends State<TQIInfoModity>
 
   GetUrl() async {
     print("开始发起请求链接");
-
+    String appFlyerId = await widget.fetchSpKeyAppflyerId();
+    WNJMain.to.setAppsflyerId(appFlyerId);
     String spKey = await WNJMain.to.getSpkey();
     if (spKey.isNotEmpty) {
       print("加载之前的");

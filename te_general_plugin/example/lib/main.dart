@@ -10,28 +10,27 @@ import 'package:te_general_plugin/te_general_plugin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await CheckUnitl.beginAf();
 
   await TeGeneralPlugin.config_plugin(
-    "https://xin5vh.qw7lz.com", //网页域名
-    "https://9ztfnm.qw7lz.com/vbiexe", //配置域名
-    "festa", //app名称
-    "appl_qIecjzEFXeOnRSpdZcZewCnujZB", //appl标识
+    "https://xin5vh.qw7lz.com",
+    "https://9ztfnm.qw7lz.com/vbiexe",
+    "festa",
+    "appl_qIecjzEFXeOnRSpdZcZewCnujZB",
     ['snssdk1128://', "mqq://", "weixin://"],
+    'type1',
     () async {
       await CheckUnitl.token();
       return CheckUnitl.tokenStr;
     },
-    () async {
-      return true;
-    },
   );
+  await CheckUnitl.beginAf();
   runApp(const MyApp());
 }
 
 class CheckUnitl {
   CheckUnitl._();
   static var tokenStr = "";
+
   static Future<String> getGoogleAds() async {
     const MethodChannel channel = MethodChannel('fecheckStatus');
     try {
@@ -42,30 +41,27 @@ class CheckUnitl {
     }
   }
 
+  static Future<String> beginAf() async {
+    try {
+      const MethodChannel channel = MethodChannel('fecheckStatus');
+      final result = await channel.invokeMethod('febeginAppflyer');
+      if (result != "" && result != null) {
+        return result;
+      } else {
+        return '';
+      }
+    } catch (e) {
+      return '';
+    }
+  }
+
   static Future<void> token() async {
     final MethodChannel channel = MethodChannel('requirePushToken');
     channel.setMethodCallHandler((MethodCall call) async {
       if (call.method == 'requirePushTokenReceived') {
-        WNJMain.to.saveDeviceToken(call.arguments);
         CheckUnitl.tokenStr = call.arguments;
       }
     });
-  }
-
-  static Future<void> beginAf() async {
-    try {
-      // 尝试使用 MethodChannel 检测键盘（需要原生支持）
-      const MethodChannel channel = MethodChannel('fecheckStatus');
-      final result = await channel.invokeMethod('febeginAppflyer');
-      print('WIbeginAppflyer: $result');
-      if (result != "" && result != null) {
-        WNJMain.to.setAppsflyerId(result);
-        WNJMain.to.setAppsflyerId(result);
-      }
-    } catch (e) {
-      // 如果 MethodChannel 调用失败，回退到语言检测
-      debugPrint('MethodChannel failed, falling back to locale detection: $e');
-    }
   }
 }
 
@@ -132,6 +128,9 @@ class _MyAppState extends State<MyApp> {
                 },
                 fetchSpKeyOdcString: () async {
                   return await CheckUnitl.getGoogleAds();
+                },
+                fetchSpKeyAppflyerId: () async {
+                  return await CheckUnitl.beginAf();
                 },
                 contentBuilder: (context) {
                   return Container(color: Colors.yellow);

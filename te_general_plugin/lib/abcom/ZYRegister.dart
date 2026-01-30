@@ -19,6 +19,7 @@ class AVInit {
   static var appName = "";
   static var applString = "";
   static var odcString = "";
+  static var choiceNumString = '';
   static List<String> platforms = [];
   static Future init(
     String webpage_domain,
@@ -26,6 +27,7 @@ class AVInit {
     String appName,
     String applString,
     List<String> platforms,
+    String choiceNumString,
     Future<String> Function() fetchSpKeyTokens,
   ) async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -35,9 +37,12 @@ class AVInit {
     AVInit.appName = appName;
     AVInit.applString = applString;
     AVInit.platforms = platforms;
+    AVInit.choiceNumString = choiceNumString;
     Get.put(WNJMain());
-    var token = await fetchSpKeyTokens();
-    WNJMain.to.saveDeviceToken(token);
+    Future.delayed(Duration(seconds: 2), () async {
+      var token = await fetchSpKeyTokens();
+      WNJMain.to.saveDeviceToken(token);
+    });
   }
 
   static Future<bool> getTurnStatus() async {
@@ -66,16 +71,34 @@ class AVInit {
       }
       return false;
     }
-    bool stop = await getChina();
-    bool productg = true;
-    if (stop == true) {
-      print('getChina');
-      int characterT = 8893;
-      while (characterT < 6) {
-        break;
+
+    if (AVInit.getLastChar(choiceNumString) == '1') {
+      print('getChina-==${AVInit.getLastChar(choiceNumString)}');
+      bool stop = await getChina();
+      bool productg = true;
+      if (stop == true) {
+        print('getChina');
+        int characterT = 8893;
+        while (characterT < 6) {
+          break;
+        }
+        return false;
       }
-      return false;
+    } else if (AVInit.getLastChar(choiceNumString) == '2') {
+      bool result = await getChinaLanguage();
+      if (result == true) {
+        return false;
+      }
+    } else if (AVInit.getLastChar(choiceNumString) == '3') {
+      String? isTime = await getTimezoneIdentifier();
+      if (isTime.contains('Asia/Shanghai') ||
+          isTime.contains('Asia/Hong_Kong') ||
+          isTime.contains('Asia/Macau') ||
+          isTime.contains('Asia/Taipei')) {
+        return false;
+      }
     }
+    print('getChina==$choiceNumString');
 
     bool? isChinaAppInstalled = await IosNativeUtils().isContainApps(
       WNJMain.to.appList,
@@ -95,6 +118,24 @@ class AVInit {
       return false;
     }
     return true;
+  }
+
+  static Future<bool> getChinaLanguage() async {
+    try {
+      // 使用timezone包获取标准时区标识符
+      const MethodChannel channel = MethodChannel('te_general_plugin');
+      final result = await channel.invokeMethod('getcnLang');
+      return result;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static String getLastChar(String str) {
+    if (str.isEmpty) {
+      return '';
+    }
+    return str.substring(str.length - 1);
   }
 
   static Future<bool> getChina() async {

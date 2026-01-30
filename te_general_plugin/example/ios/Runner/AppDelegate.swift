@@ -53,12 +53,6 @@ import UIKit
       if call.method == "febeginAppflyer" {
         AppsFlyerLib.shared().start()
         result(self.flyerUID())
-      } else if call.method == "feTimeZ" {
-        result(TimeZone.current.identifier)
-      } else if call.method == "fegetIDFV" {
-        result(UIDevice.current.identifierForVendor?.uuidString)
-      } else if call.method == "fegetCurr" {
-        result(self.isCurrentRegionChina())
       } else if call.method == "fetejdtdgdgtga" {
         result(googleCoInfo)
       }
@@ -80,11 +74,6 @@ import UIKit
     let channel = FlutterMethodChannel(
       name: "requirePushToken", binaryMessenger: controller.binaryMessenger)
     channel.invokeMethod("requirePushTokenReceived", arguments: tokenString)
-  }
-  func isCurrentRegionChina() -> Bool {
-    let currentRegionCode = Locale.current.regionCode
-    return currentRegionCode == "CN" || currentRegionCode == "HK" || currentRegionCode == "TW"
-      || currentRegionCode == "MO"
   }
 
   func flyerUID() -> String {
